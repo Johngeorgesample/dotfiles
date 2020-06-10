@@ -52,8 +52,6 @@ Plug 'Brettm12345/moonlight.vim'
 
 call plug#end()
 
-let mapleader = ","
-
 set backspace=indent,eol,start
 set background=dark
 set termguicolors
@@ -74,23 +72,29 @@ let g:tex_flavor = 'latex'
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
+let mapleader = ","
+
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 nmap <silent> // :nohlsearch<CR>
 inoremap jj <Esc>
+map <silent><Leader>af :ALEFix eslint<CR>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
 vmap <Leader>as :sort<cr>
 nmap <Leader>as :sort<cr>
+map <Leader>cs :colorscheme <SPACE>
 nmap <Leader>dt :diffthis<cr>
 nmap <Leader>do :diffoff<cr>
-map <silent><Leader>e :ALEFix eslint<CR>
 map <leader>es :UltiSnipsEdit<cr>
 map <leader>gw :Gwrite<CR>
 map <leader>gc :Gcommit -m ""<LEFT>
 map <leader>gs :Gstatus<CR>
 map <leader>gb :Gblame<CR>
-map <leader>gd :Gdiffsplit<CR>
+map <leader>gd :Gdiffsplit<SPACE>
+map <leader>gdd :Gdiffsplit dev<CR>
+map <leader>gdp :Gdiffsplit prod<CR>
+map <leader>gds :Gdiffsplit<CR>
 map <Leader>h <<
 map <Leader>j ddp
 map <Leader>k ddkP
@@ -99,10 +103,17 @@ map <leader>n :NERDTreeToggle <CR>
 map <leader>nc :e ~/development/metro/nuxt.config.js <CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
 map <leader>ss :setlocal spell!<CR>
-map <Leader>sv :so $MYVIMRC<cr>
+map <Leader>sv :so $MYVIMRC<cr``>``
 map <leader>t :TestFile<CR>
+map <leader>x :vert term python3 % <CR>
 map <leader>// :FZF<CR>
 map <leader>/, :CtrlSF<SPACE>
+
+" Edit another file in the same directory as the current file
+" uses expression to extract path from current file's path
+map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
+map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+map <Leader>vn :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 nnoremap <leader>v <C-w>v
 nnoremap <leader>h <C-w>s
@@ -117,7 +128,6 @@ nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
 noremap + <c-a>
 noremap - <c-x>
 
-map <Leader>cs :colorscheme <SPACE>
 
 " jump to
 " nnoremap <silent> <Space><Space> /++/<CR> ciw
@@ -128,8 +138,6 @@ command W w " make :W behave like :w
 command Q q " make :Q behave like :q
 
 map Q <Nop>
-
-" Emacs-like beginning and end of line.
 
 command GGF GitGutterFold
 " --------------------------------------------------------------------------------
@@ -177,6 +185,9 @@ set noswapfile
 set noundofile
 set nobackup
 set nowb
+
+" default diffs to vertical instead of horizontal
+set diffopt+=vertical
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
@@ -394,10 +405,7 @@ augroup END
 " spell check and automatically wrap commit messages.
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
-
-" --------------------------------------------------------------------------------
-" Format one-liners
-" --------------------------------------------------------------------------------
-
+" stop plugins from mucking with the `global` flag
+set nogdefault
 
 set rtp+=/usr/local/opt/fzf
