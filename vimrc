@@ -9,6 +9,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -49,6 +50,8 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'https://github.com/kristijanhusak/vim-hybrid-material.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'Brettm12345/moonlight.vim'
+Plug 'ghifarit53/tokyonight.vim'
+Plug 'franbach/miramare'
 
 call plug#end()
 
@@ -77,7 +80,6 @@ let mapleader = ","
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 nmap <silent> // :nohlsearch<CR>
-inoremap jj <Esc>
 map <silent><Leader>af :ALEFix eslint<CR>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
@@ -92,7 +94,10 @@ map <leader>gc :Gcommit -m ""<LEFT>
 map <leader>gs :Gstatus<CR>
 map <leader>gb :Gblame<CR>
 map <leader>gd :Gdiffsplit<SPACE>
+map <leader>gh :Gbrowse<CR>
+map <silent><leader>gp :Gbrowse!<CR>
 map <leader>gdd :Gdiffsplit dev<CR>
+map <leader>gdm :Gdiffsplit master<CR>
 map <leader>gdp :Gdiffsplit prod<CR>
 map <leader>gds :Gdiffsplit<CR>
 map <Leader>h <<
@@ -103,19 +108,20 @@ map <leader>n :NERDTreeToggle <CR>
 map <leader>nc :e ~/development/metro/nuxt.config.js <CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
 map <leader>ss :setlocal spell!<CR>
-map <Leader>sv :so $MYVIMRC<cr``>``
+map <Leader>sv :so $MYVIMRC<CR>
 map <leader>t :TestFile<CR>
+nnoremap <leader>v <C-w>v
+nmap Y y$
 map <leader>x :vert term python3 % <CR>
+inoremap <leader>z dispatch('layout/updateStatus', { text: '', removable: false }, { root: true })
+
 map <leader>// :FZF<CR>
 map <leader>/, :CtrlSF<SPACE>
-
 " Edit another file in the same directory as the current file
 " uses expression to extract path from current file's path
 map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-map <Leader>vn :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
-nnoremap <leader>v <C-w>v
 nnoremap <leader>h <C-w>s
 
 " open vimrc/init.vim
@@ -177,7 +183,8 @@ set gdefault " assume the /g flag on :s substitutions to replace all matches in 
 syntax enable " enable syntax highlighting
 filetype plugin indent on " turns on plugin, indent, detection
 set t_Co=256
-colorscheme sonokai " colorscheme
+let g:tokyonight_style = 'storm' " storm || night
+colorscheme tokyonight " colorscheme
 " colorscheme gruvbox " colorscheme
 
 " no swap files
@@ -227,7 +234,6 @@ let g:tagbar_indent = 2
 let g:tagbar_iconchars = ['+', '-']
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
-
 set tags=tags " I _think_ this is for tagbar?
 
 " --------------------------------------------------------------------------------
@@ -235,6 +241,7 @@ set tags=tags " I _think_ this is for tagbar?
 " --------------------------------------------------------------------------------
 let g:airline_powerline_fonts = 1
 " let g:airline_theme= 'gruvbox'
+
 set laststatus=2 "always display statusbar
 
 " --------------------------------------------------------------------------------
@@ -404,6 +411,9 @@ augroup END
 
 " spell check and automatically wrap commit messages.
 autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" autocompile .tex
+autocmd BufWritePost *.tex silent! execute "!pdflatex % >/dev/null 2>&1" | redraw!
 
 " stop plugins from mucking with the `global` flag
 set nogdefault
