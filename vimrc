@@ -10,6 +10,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -27,6 +28,8 @@ Plug 'janko/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/chrisbra/Colorizer.git'
 Plug 'vimwiki/vimwiki'
+Plug 'aserebryakov/vim-todo-lists'
+Plug 'jiangmiao/auto-pairs'
 
 " writing
 Plug 'junegunn/goyo.vim'
@@ -52,6 +55,9 @@ Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'Brettm12345/moonlight.vim'
 Plug 'ghifarit53/tokyonight.vim'
 Plug 'franbach/miramare'
+Plug 'sainnhe/gruvbox-material'
+Plug 'ntk148v/vim-horizon'
+Plug 'embark-theme/vim', { 'as': 'embark' }
 
 call plug#end()
 
@@ -80,6 +86,7 @@ let mapleader = ","
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 nmap <silent> // :nohlsearch<CR>
+nmap <Leader>s  :%s/
 map <silent><Leader>af :ALEFix eslint<CR>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
@@ -107,6 +114,7 @@ map <Leader>l >>
 map <leader>n :NERDTreeToggle <CR>
 map <leader>nc :e ~/development/metro/nuxt.config.js <CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
+map <Leader>rw :%s/\s\+$//<cr>:w<cr>
 map <leader>ss :setlocal spell!<CR>
 map <Leader>sv :so $MYVIMRC<CR>
 map <leader>t :TestFile<CR>
@@ -120,7 +128,7 @@ map <leader>/, :CtrlSF<SPACE>
 " Edit another file in the same directory as the current file
 " uses expression to extract path from current file's path
 map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
-map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+"map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 nnoremap <leader>h <C-w>s
 
@@ -166,8 +174,8 @@ set hlsearch " highlight matches
 set guioptions= " Remove scrollbars in macvim
 set splitbelow " open all horizontal buffers below current one
 set splitright "open all vertical buffers to the right of the current one
-set cursorcolumn " highlight column of cursor
-set cursorline " highlight row of cursor
+" set cursorcolumn " highlight column of cursor
+" set cursorline " highlight row of cursor
 set showmatch " highlight matching brace/backet when cursor over
 set scrolloff=5 " keep cursor away from top/bottom
 set ignorecase " ignore case if search pattern is all lowercase
@@ -178,6 +186,7 @@ set clipboard=unnamed " use system clipboard for copy/paste
 set encoding=UTF-8
 set showcmd " display incomplete commands
 set lazyredraw " don't redraw screen during macros
+set ttyfast " trying to improve nvim speed
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 " set termwinsize=20x0 " make term buffer size 20 rows tall
 syntax enable " enable syntax highlighting
