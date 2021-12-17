@@ -4,16 +4,15 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dense-analysis/ale'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'dyng/ctrlsf.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'ryanoasis/vim-devicons'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'rhysd/git-messenger.vim'
@@ -30,7 +29,10 @@ Plug 'https://github.com/chrisbra/Colorizer.git'
 Plug 'vimwiki/vimwiki'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'pbrisbin/vim-mkdir'
+Plug 'rizzatti/dash.vim'
+Plug 'junegunn/gv.vim'
+"
 " writing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -58,6 +60,7 @@ Plug 'franbach/miramare'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ntk148v/vim-horizon'
 Plug 'embark-theme/vim', { 'as': 'embark' }
+Plug 'fratajczak/one-monokai-vim'
 
 call plug#end()
 
@@ -69,7 +72,7 @@ set termguicolors
 " configure editor with tabs and nice stuff...
 " --------------------------------------------------------------------------------
 set expandtab " enter spaces when tab is pressed
-set textwidth=120 " break lines when line length increases
+" set textwidth=120 " break lines when line length increases
 set tabstop=2 " use 2 spaces to represent tab
 set softtabstop=4
 set shiftwidth=2 " number of spaces to use for auto indent
@@ -107,10 +110,8 @@ map <leader>gdd :Gdiffsplit dev<CR>
 map <leader>gdm :Gdiffsplit master<CR>
 map <leader>gdp :Gdiffsplit prod<CR>
 map <leader>gds :Gdiffsplit<CR>
-map <Leader>h <<
 map <Leader>j ddp
 map <Leader>k ddkP
-map <Leader>l >>
 map <leader>n :NERDTreeToggle <CR>
 map <leader>nc :e ~/development/metro/nuxt.config.js <CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
@@ -119,7 +120,9 @@ map <leader>ss :setlocal spell!<CR>
 map <Leader>sv :so $MYVIMRC<CR>
 map <leader>t :TestFile<CR>
 nnoremap <leader>v <C-w>v
-nmap Y y$
+map <Leader>w <C-w>w
+" nmap Y y$
+map <leader>y ggVGy<cr>
 map <leader>x :vert term python3 % <CR>
 inoremap <leader>z dispatch('layout/updateStatus', { text: '', removable: false }, { root: true })
 
@@ -141,6 +144,10 @@ nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
 " increment numbers
 noremap + <c-a>
 noremap - <c-x>
+
+" https://twitter.com/rixcy/status/1416848280101736454
+" replace words with vim-abolish
+vnoremap <C-r> "hy:%Subvert/<C-r>h//gc<left><left><left>
 
 
 " jump to
@@ -207,6 +214,10 @@ set diffopt+=vertical
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
+
+" Don't wait so long for the next keypress (particularly in ambigious Leader
+" situations.
+set timeoutlen=500
 
 " --------------------------------------------------------------------------------
 " Movement
