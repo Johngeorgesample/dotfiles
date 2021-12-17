@@ -64,6 +64,11 @@ Plug 'fratajczak/one-monokai-vim'
 
 call plug#end()
 
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 set backspace=indent,eol,start
 set background=dark
 set termguicolors
@@ -90,11 +95,18 @@ imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 nmap <silent> // :nohlsearch<CR>
 nmap <Leader>s  :%s/
+" nmap <silent>gd <Plug>(coc-definition)
+nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent>ds <Plug>(coc-definition)
+nmap <silent>gy <Plug>(coc-type-definition)
+nmap <silent>gi <Plug>(coc-implementation)
+nmap <silent>gr <Plug>(coc-references)
+nnoremap <silent> K :call CocAction('doHover')<CR>
+nmap <leader>rn <Plug>(coc-rename)
 map <silent><Leader>af :ALEFix eslint<CR>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
 vmap <Leader>as :sort<cr>
-nmap <Leader>as :sort<cr>
 map <Leader>cs :colorscheme <SPACE>
 nmap <Leader>dt :diffthis<cr>
 nmap <Leader>do :diffoff<cr>
@@ -102,10 +114,12 @@ map <leader>es :UltiSnipsEdit<cr>
 map <leader>gw :Gwrite<CR>
 map <leader>gc :Gcommit -m ""<LEFT>
 map <leader>gs :Gstatus<CR>
-map <leader>gb :Gblame<CR>
+map <leader>gb :Git blame<CR>
 map <leader>gd :Gdiffsplit<SPACE>
-map <leader>gh :Gbrowse<CR>
-map <silent><leader>gp :Gbrowse!<CR>
+map <leader>gh :GBrowse<CR>
+map <silent><leader>gp :GBrowse!<CR>
+" diff against branch n commits back
+map <leader>gdb :Gdiffs !~
 map <leader>gdd :Gdiffsplit dev<CR>
 map <leader>gdm :Gdiffsplit master<CR>
 map <leader>gdp :Gdiffsplit prod<CR>
@@ -113,12 +127,17 @@ map <leader>gds :Gdiffsplit<CR>
 map <Leader>j ddp
 map <Leader>k ddkP
 map <leader>n :NERDTreeToggle <CR>
-map <leader>nc :e ~/development/metro/nuxt.config.js <CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
 map <Leader>rw :%s/\s\+$//<cr>:w<cr>
 map <leader>ss :setlocal spell!<CR>
 map <Leader>sv :so $MYVIMRC<CR>
-map <leader>t :TestFile<CR>
+" Replacing with t prefix tree 
+" map <leader>t :TestFile<CR>
+map <leader>tn :TestNearest<CR>
+map <leader>tf :TestFile<CR>
+map <leader>ts :TestSuite<CR>
+map <leader>tl :TestLast<CR>
+map <leader>tg :TestVisit<CR>
 nnoremap <leader>v <C-w>v
 map <Leader>w <C-w>w
 " nmap Y y$
@@ -155,12 +174,12 @@ vnoremap <C-r> "hy:%Subvert/<C-r>h//gc<left><left><left>
 nnoremap <silent> <Space><Space> /++/<CR>
 
 " fat finger saving or quiting
-command W w " make :W behave like :w
-command Q q " make :Q behave like :q
+" command W w " make :W behave like :w
+" command Q q " make :Q behave like :q
 
 map Q <Nop>
 
-command GGF GitGutterFold
+" command GGF GitGutterFold
 " --------------------------------------------------------------------------------
 " Autocmds
 " --------------------------------------------------------------------------------
@@ -169,6 +188,15 @@ autocmd BufWritePre * %s/\s\+$//e
 
 " auto run python files on save
 " autocmd BufWritePost *.py silent! bd \!python3\ * | vert term python3 %
+"
+" set filetypes as typescriptreact
+" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+"
+" set .snap files as jsx
+autocmd BufNewFile,BufRead *.snap set filetype=jsx
+
+
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 
 " --------------------------------------------------------------------------------
 " General settings
@@ -338,8 +366,8 @@ endfunction
 " Ultisnips
 " --------------------------------------------------------------------------------
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 " --------------------------------------------------------------------------------
@@ -356,14 +384,18 @@ let g:ctrlsf_mapping = {
 " --------------------------------------------------------------------------------
 " vim-test config
 " --------------------------------------------------------------------------------
-" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> t<C-n> :TestNearest<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
+" Experimenting replacing these with leader commands
+" nmap <silent> t<C-n> :TestNearest<CR>
+" nmap <silent> t<C-f> :TestFile<CR>
+" nmap <silent> t<C-s> :TestSuite<CR>
+" nmap <silent> t<C-l> :TestLast<CR>
+" nmap <silent> t<C-g> :TestVisit<CR>
 
 " --------------------------------------------------------------------------------
+" CoC config.
+" --------------------------------------------------------------------------------
+let g:coc_global_extensions = ['coc-tsserver']
+
 " rainbow config
 " --------------------------------------------------------------------------------
 " enable rainbow parens
@@ -401,22 +433,12 @@ if has('nvim')
   augroup END
 endif
 
-
-"Smooth scroll on ctrl+d and ctrl+u
-" nnoremap <silent> <c-u> :call <sid>smoothScroll(1)<cr>
-" nnoremap <silent> <c-d> :call <sid>smoothScroll(0)<cr>
-" fun! s:smoothScroll(up)
-" execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-" redraw
-" for l:count in range(3, &scroll, 2)
-" sleep 7m
-" execute "normal " . (a:up ? "\<c-y>" : "\<c-e>")
-" redraw
-" endfor
-
 " bring the cursor in the middle of screen
 " execute "normal M"
 
+" bring back q to close fugitiveblame window
+autocmd FileType fugitiveblame nmap <buffer> q gq
+"
 " same as above but apply to super star as well
 :nnoremap * /\<<C-R>=expand('<cword>')<CR>\><CR>
 :nnoremap # ?\<<C-R>=expand('<cword>')<CR>\><CR>
