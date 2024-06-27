@@ -1,48 +1,48 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dense-analysis/ale'
-Plug 'sheerun/vim-polyglot'
 Plug 'dyng/ctrlsf.vim'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'ryanoasis/vim-devicons'
-Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'rhysd/git-messenger.vim'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'luochen1990/rainbow'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch':'release'}
 Plug 'janko/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/chrisbra/Colorizer.git'
 Plug 'vimwiki/vimwiki'
 Plug 'aserebryakov/vim-todo-lists'
-Plug 'jiangmiao/auto-pairs'
+Plug 'mbbill/undotree'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'rizzatti/dash.vim'
 Plug 'junegunn/gv.vim'
-"
 " writing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
-" javascript/web
+" JavaScript/TypeScript
 Plug 'https://github.com/posva/vim-vue.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
 
-" themes
+" colorschemes
 Plug 'mhartington/oceanic-next'
+Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/lifepillar/vim-gruvbox8.git'
 Plug 'https://github.com/ajh17/Spacegray.vim.git'
@@ -61,6 +61,8 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'ntk148v/vim-horizon'
 Plug 'embark-theme/vim', { 'as': 'embark' }
 Plug 'fratajczak/one-monokai-vim'
+Plug 'https://github.com/catppuccin/vim.git'
+Plug 'https://github.com/rebelot/kanagawa.nvim'
 
 call plug#end()
 
@@ -82,10 +84,8 @@ set tabstop=2 " use 2 spaces to represent tab
 set softtabstop=4
 set shiftwidth=2 " number of spaces to use for auto indent
 set autoindent " copy indent from current line when starting a new line
-let g:tex_flavor = 'latex'
 
-
-
+" set colorcolumn=120 "visually indicate lines longer than 120 characters
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
@@ -96,8 +96,8 @@ imap <c-a> <c-o>^
 nmap <silent> // :nohlsearch<CR>
 nmap <Leader>s  :%s/
 " nmap <silent>gd <Plug>(coc-definition)
-nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
-nmap <silent>ds <Plug>(coc-definition)
+nmap <silent>gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent>ds :call CocAction('jumpDefinition')<CR>
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
@@ -106,10 +106,11 @@ nmap <leader>rn <Plug>(coc-rename)
 map <silent><Leader>af :ALEFix eslint<CR>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
-vmap <Leader>as :sort<cr>
-map <Leader>cs :colorscheme <SPACE>
-nmap <Leader>dt :diffthis<cr>
-nmap <Leader>do :diffoff<cr>
+map <leader>ar :ALEResetBuffer<cr>
+vmap <leader>as :sort<cr>
+map <leader>cs :colorscheme <SPACE>
+nmap <leader>dt :diffthis<cr>
+nmap <leader>do :diffoff<cr>
 map <leader>es :UltiSnipsEdit<cr>
 map <leader>gw :Gwrite<CR>
 map <leader>gc :Gcommit -m ""<LEFT>
@@ -120,55 +121,52 @@ map <leader>gh :GBrowse<CR>
 map <silent><leader>gp :GBrowse!<CR>
 " diff against branch n commits back
 map <leader>gdb :Gdiffs !~
-map <leader>gdd :Gdiffsplit dev<CR>
+map <leader>gdd :Gdiffsplit main<CR>
 map <leader>gdm :Gdiffsplit master<CR>
 map <leader>gdp :Gdiffsplit prod<CR>
 map <leader>gds :Gdiffsplit<CR>
 map <Leader>j ddp
 map <Leader>k ddkP
 map <leader>n :NERDTreeToggle <CR>
+" open current buffer in new tab
+map <leader>nt :tabedit %<CR>
+" Optional chaining - replace all `.` with `?.`
+map <leader>oc :s/\%V\./?./g<CR>
+" toggle relative number since it confuses
+" people when pairing
+map <leader>rn :tabdo windo set relativenumber!<CR>
 map <leader>r :%s///g<LEFT><LEFT><LEFT>
 map <Leader>rw :%s/\s\+$//<cr>:w<cr>
 map <leader>ss :setlocal spell!<CR>
 map <Leader>sv :so $MYVIMRC<CR>
-" Replacing with t prefix tree 
-" map <leader>t :TestFile<CR>
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
 map <leader>ts :TestSuite<CR>
 map <leader>tl :TestLast<CR>
 map <leader>tg :TestVisit<CR>
+" open current file in new vertical buffer
 nnoremap <leader>v <C-w>v
 map <Leader>w <C-w>w
 " nmap Y y$
 map <leader>y ggVGy<cr>
-map <leader>x :vert term python3 % <CR>
-inoremap <leader>z dispatch('layout/updateStatus', { text: '', removable: false }, { root: true })
-
 map <leader>// :FZF<CR>
 map <leader>/, :CtrlSF<SPACE>
 " Edit another file in the same directory as the current file
 " uses expression to extract path from current file's path
 map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 "map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-
 nnoremap <leader>h <C-w>s
-
 " open vimrc/init.vim
 nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
-
 " Jump to matching pairs easily, with Tab
 " nnoremap <Tab> %
 
 " increment numbers
 noremap + <c-a>
 noremap - <c-x>
-
 " https://twitter.com/rixcy/status/1416848280101736454
 " replace words with vim-abolish
 vnoremap <C-r> "hy:%Subvert/<C-r>h//gc<left><left><left>
-
-
 " jump to
 " nnoremap <silent> <Space><Space> /++/<CR> ciw
 nnoremap <silent> <Space><Space> /++/<CR>
@@ -178,8 +176,8 @@ nnoremap <silent> <Space><Space> /++/<CR>
 " command Q q " make :Q behave like :q
 
 map Q <Nop>
-
 " command GGF GitGutterFold
+
 " --------------------------------------------------------------------------------
 " Autocmds
 " --------------------------------------------------------------------------------
@@ -197,7 +195,6 @@ autocmd BufNewFile,BufRead *.snap set filetype=jsx
 
 
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-
 " --------------------------------------------------------------------------------
 " General settings
 " --------------------------------------------------------------------------------
@@ -215,6 +212,10 @@ set showmatch " highlight matching brace/backet when cursor over
 set scrolloff=5 " keep cursor away from top/bottom
 set ignorecase " ignore case if search pattern is all lowercase
 set smartcase " don't ignore case if start with capital
+" same as above but apply to super star as well
+nnoremap * /\<<C-R>=expand('<cword>')<CR>\><CR>
+nnoremap # ?\<<C-R>=expand('<cword>')<CR>\><CR>
+
 " set paste " don't auto indent pasted code
 set guifont=Inconsolata\ Nerd\ Font:h14 " font-name:pxSize
 set clipboard=unnamed " use system clipboard for copy/paste
@@ -225,11 +226,10 @@ set ttyfast " trying to improve nvim speed
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 " set termwinsize=20x0 " make term buffer size 20 rows tall
 syntax enable " enable syntax highlighting
+
 filetype plugin indent on " turns on plugin, indent, detection
 set t_Co=256
-let g:tokyonight_style = 'storm' " storm || night
-colorscheme tokyonight " colorscheme
-" colorscheme gruvbox " colorscheme
+colorscheme embark " colorscheme
 
 " no swap files
 set noswapfile
@@ -298,14 +298,6 @@ set laststatus=2 "always display statusbar
 " open folder/file with spacebar in NERDTree
 let NERDTreeMapActivateNode='<space>'
 
-" open nerdtree on no file
-" function! StartUp()
-" if 0 == argc()
-" NERDTree
-" end
-" endfunction
-" autocmd VimEnter * call StartUp()
-
 " start nerdtree with minimalui
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
@@ -319,16 +311,11 @@ let NERDTreeIgnore = ['.git$', '^node_modules']
 let g:limelight_conceal_ctermfg = 240
 
 " --------------------------------------------------------------------------------
-"  Indent Guides config
+" indent-guide config
 " --------------------------------------------------------------------------------
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-
-
-" --------------------------------------------------------------------------------
-" indent-guide config
-" --------------------------------------------------------------------------------
 hi IndentGuidesOdd  ctermbg=black
 hi IndentGuidesEven ctermbg=darkgrey
 
@@ -345,8 +332,8 @@ function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
 
-  let height = float2nr(20) " 10
-  let width = float2nr(80) " 80
+  let height = float2nr(40) " 10 -> 20
+  let width = float2nr(120) " 80
   let horizontal = float2nr((&columns - width) / 2)
   let vertical = 1
 
@@ -363,12 +350,28 @@ function! FloatingFZF()
 endfunction
 
 " --------------------------------------------------------------------------------
+" conflict-marker
+" --------------------------------------------------------------------------------
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+
+" Include text after begin and end markers
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+" --------------------------------------------------------------------------------
 " Ultisnips
 " --------------------------------------------------------------------------------
+" Set ultisnips triggers
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
 
 " --------------------------------------------------------------------------------
 " ctrlsf
@@ -396,6 +399,10 @@ let g:ctrlsf_mapping = {
 " --------------------------------------------------------------------------------
 let g:coc_global_extensions = ['coc-tsserver']
 
+" Use <CR> to trigger completion
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+" --------------------------------------------------------------------------------
 " rainbow config
 " --------------------------------------------------------------------------------
 " enable rainbow parens
@@ -404,7 +411,11 @@ let g:rainbow_active = 1
 " --------------------------------------------------------------------------------
 " Misc.
 " --------------------------------------------------------------------------------
-"set wildmode=longest,list,full
+" Ignore default colorschemes when tabbing through list
+set wildignore+=blue.vim,darkblue.vim,default.vim,delek.vim,desert.vim,
+      \elflord.vim,evening.vim,industry.vim,koehler.vim,morning.vim,murphy.vim,
+      \pablo.vim,peachpuff.vim,ron.vim,shine.vim,slate.vim,torte.vim,zellner.vim
+
 set wildmode=list:longest,full
 " Not sure why the below is recommended, should look into later
 " set wildmenu
