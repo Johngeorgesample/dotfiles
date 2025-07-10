@@ -1,6 +1,5 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -28,6 +27,7 @@ Plug 'https://github.com/chrisbra/Colorizer.git'
 Plug 'vimwiki/vimwiki'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'mbbill/undotree'
+Plug 'prettier/vim-prettier'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'rizzatti/dash.vim'
@@ -35,6 +35,7 @@ Plug 'junegunn/gv.vim'
 " writing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'davidbeckingsale/writegood.vim'
 
 " JavaScript/TypeScript
 Plug 'https://github.com/posva/vim-vue.git'
@@ -56,6 +57,7 @@ Plug 'https://github.com/kristijanhusak/vim-hybrid-material.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'Brettm12345/moonlight.vim'
 Plug 'ghifarit53/tokyonight.vim'
+Plug 'folke/tokyonight.nvim'
 Plug 'franbach/miramare'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ntk148v/vim-horizon'
@@ -63,6 +65,12 @@ Plug 'embark-theme/vim', { 'as': 'embark' }
 Plug 'fratajczak/one-monokai-vim'
 Plug 'https://github.com/catppuccin/vim.git'
 Plug 'https://github.com/rebelot/kanagawa.nvim'
+Plug 'EdenEast/nightfox.nvim'
+Plug 'neanias/everforest-nvim'
+Plug 'talha-akram/noctis.nvim'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'xolox/vim-misc'
+Plug 'rose-pine/vim'
 
 call plug#end()
 
@@ -104,6 +112,7 @@ nmap <silent>gr <Plug>(coc-references)
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>rn <Plug>(coc-rename)
 map <silent><Leader>af :ALEFix eslint<CR>
+map <leader>1 :NextColorScheme<cr>
 map <leader>aj :ALENext<cr>
 map <leader>ak :ALEPrevious<cr>
 map <leader>ar :ALEResetBuffer<cr>
@@ -122,7 +131,7 @@ map <silent><leader>gp :GBrowse!<CR>
 " diff against branch n commits back
 map <leader>gdb :Gdiffs !~
 map <leader>gdd :Gdiffsplit main<CR>
-map <leader>gdm :Gdiffsplit master<CR>
+map <leader>gdm :Gdiffsplit main<CR>
 map <leader>gdp :Gdiffsplit prod<CR>
 map <leader>gds :Gdiffsplit<CR>
 map <Leader>j ddp
@@ -172,7 +181,7 @@ vnoremap <C-r> "hy:%Subvert/<C-r>h//gc<left><left><left>
 nnoremap <silent> <Space><Space> /++/<CR>
 
 " fat finger saving or quiting
-" command W w " make :W behave like :w
+command! W w
 " command Q q " make :Q behave like :q
 
 map Q <Nop>
@@ -182,7 +191,7 @@ map Q <Nop>
 " Autocmds
 " --------------------------------------------------------------------------------
 " Delete trailing spaces/whitespace on save
-autocmd BufWritePre * %s/\s\+$//e
+" autocmd BufWritePre * %s/\s\+$//e
 
 " auto run python files on save
 " autocmd BufWritePost *.py silent! bd \!python3\ * | vert term python3 %
@@ -229,7 +238,7 @@ syntax enable " enable syntax highlighting
 
 filetype plugin indent on " turns on plugin, indent, detection
 set t_Co=256
-colorscheme embark " colorscheme
+colorscheme hybrid_reverse
 
 " no swap files
 set noswapfile
@@ -394,13 +403,18 @@ let g:ctrlsf_mapping = {
 " nmap <silent> t<C-l> :TestLast<CR>
 " nmap <silent> t<C-g> :TestVisit<CR>
 
+
+let test#javascript#runner = 'vitest'
+let test#javascript#vitest#enabled = 1
+let test#javascript#vitest#pattern = '\v.*\.test\.(tsx|ts)$'
+
 " --------------------------------------------------------------------------------
 " CoC config.
 " --------------------------------------------------------------------------------
 let g:coc_global_extensions = ['coc-tsserver']
 
 " Use <CR> to trigger completion
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 " --------------------------------------------------------------------------------
 " rainbow config
