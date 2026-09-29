@@ -17,3 +17,13 @@ To set up Pi on a new machine (from this repo's root):
 4. Start `pi`, run `/login` for your provider, and use `/model` to select an available model if the configured `openai-codex` / `gpt-6-sol` isn't available. Run `/reload` if Pi was already open when you copied the files.
 
 This is a partial setup, not a full agent backup: custom skills, MCP servers, global instructions, credentials (`auth.json`), sessions, and caches are not tracked. The `skills` entries in `settings.json` only exclude paths on the original machine; they do not install skills. The shell alias prefix also assumes aliases in `~/.zshrc` and may need adjusting on a different machine.
+## Lazygit theme
+
+To use the Catppuccin Macchiato theme in `lazygit.yml`, install lazygit and link the config from this repository's root:
+
+```sh
+mkdir -p ~/.config/lazygit
+ln -s "$PWD/lazygit.yml" ~/.config/lazygit/config.yml
+```
+
+Back up or remove an existing `~/.config/lazygit/config.yml` first. Run `lazygit` to see the theme.

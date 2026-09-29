@@ -15,21 +15,33 @@ alias .zshrc="nvim ~/.zshrc"
 alias :q="exit"
 alias :Q="exit"
 alias a='ls -lrth'
+alias bi='arch -arm64 brew install'
 alias bp=' cd ~/development/brewpad/'
+alias c='claude'
+alias ca='clear && '
 alias cat='bat'
 alias cdr='cd $(git rev-parse --show-toplevel)' # go to root level of git dir
-alias ch="history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10"
+alias ch="history | awk '{a[$2]++}END{for (i in a){print a[i] " " i}}' | sort -rn | head -20"
+alias claude-side='tmux split-window -h -l 25% "claude"'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias cr='launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"'
+alias cr='tuicr'
+alias crevd='git difftool --tool=nvimdiff -y'
 alias ct='git checkout test'
 alias cwmstop="brew services stop yabai"
 alias cwmstart="brew services start yabai"
 alias dc='cd ~/development/ringo-staywell-dc'
+alias dd='docker compose down'
+alias dl='docker-compose logs'
+alias dps='docker-compose ps'
+alias dr='dd && du && yd'
+alias du='docker compose up --build -d'
 alias dev=" cd ~/development"
 alias diary='cd ~/Documents/code/journal && nvim `date +"%Y-%m-%d"`.md'
 alias journal='cd ~/Documents/txt\ files && nvim `date +"%m.%d.%Y"`.txt'
 alias dotfiles='cd ~/dotfiles'
 alias doppler='mpv --loop-file=inf "https://radar.weather.gov/lite/N0R/PBZ_loop.gif"'
+alias ee='yarn run e2e'
+alias eu='yarn run e2e --ui'
 alias fd='displayplacer "id:7D8F5137-0762-3904-0B6C-BC80189F82A8 res:1920x1200 hz:59 color_depth:8 scaling:off origin:(0,0) degree:0" "id:98958CF3-4350-BDC2-FB15-1ADF6A8BD7D1 res:1200x1920 hz:59 color_depth:8 scaling:off origin:(-1200,-315) degree:90"'
 alias fxn='cd ~/development/function/'
 alias gad='git add --all .'
@@ -45,7 +57,7 @@ alias gcobb='git checkout -b bugfix/'
 alias gcobf='git checkout -b feature/'
 alias gcod='git checkout dev'
 alias gcodp='git checkout dev && git pull'
-alias gcom='git checkout master'
+alias gcom='git checkout main'
 alias gcop='git checkout prod'
 alias gcos='git checkout stg'
 alias gf='git commit --fixup'
@@ -53,13 +65,18 @@ alias ghead='git log -1 --format="%H"'
 alias ghm="open https://github.com/groupten/metro"
 alias gl='git log'
 alias glp='git log --graph --pretty="%C(bold magenta)%h %C(blue)%cr%C(reset) %s %C(dim normal)%an%C(reset) %C(auto)%d" --all'
-alias gp='git pull'
+alias glb='git reflog show --pretty=format:"%gs ~ %gd" --date=relative | grep "checkout:" | grep -oE "[^ ]+ ~ .*" | awk -F~ "!seen[\$1]++" | head -n 10 | awk -F" ~ HEAD@{" "{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr(\$2, 1, length(\$2)-1), \$1)}"'
+alias gp='git pull origin `git rev-parse --abbrev-ref HEAD`'
 alias gpo='git push origin'
 alias gpup='git push origin `git rev-parse --abbrev-ref HEAD`'
 alias gs='git status'
+alias gsa='git stash --all'
 alias gsl='git stash list'
+alias here='open . && exit'
+alias hosts='nvim /private/etc/hosts'
 alias hs='history | grep'
 alias job="open https://www.notion.so/ee4a68dc8a8549be92c996b196add3a4?v=6e32561f1c284407b28a90f6d82f7be9"
+alias kg='lazygit'
 alias killtmux="tmux kill-server"
 alias later='open https://www.notion.so/Things-to-look-at-later-2766a1c0c1be43d790f5eec981be814f'
 alias life="cd ~/documents/life"
@@ -70,12 +87,13 @@ alias metro="cd ~/development/Metro"
 alias mpr="open https://github.com/GroupTen/metro/pulls"
 alias n='nvim'
 alias nbim='nvim'
+alias ni='npm ci'
 alias nope='git merge --abort'
 alias notes="cd ~/development/notes"
 alias nuke='git branch --merged | egrep -v "(^\*|master|dev|stg|test)" | xargs git branch -d'
 alias nvimrc='nvim .config/nvim/init.vim'
 alias personal='cd ~/development/personal-site'
-alias pr='gh pr create'
+alias pr='git push origin HEAD && open $(gh pr create -f)'
 alias prv='gh pr view --web'
 alias projects='open https://www.notion.so/Project-ideas-bd2d7d2cb5d045508d28daa07d204246'
 alias raps="nvim ~/Documents/Notes/raps.md"
@@ -85,6 +103,7 @@ alias scrot="screencapture ~/Desktop/screenshot.jpg"
 alias shane="open 'https://meet.google.com/rqb-egzy-uyq?pli=1&authuser=1'"
 
 alias skhdrc='nvim ~/.skhdrc'
+alias skim='open -a Skim.app'
 alias sp='spotify pause'
 alias staywell='cd ~/development/ringo-staywell-dc'
 alias sz='source ~/.zshrc'
