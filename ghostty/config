@@ -1,0 +1,10 @@
+font-family = "Berkeley Mono"
+theme = Catppuccin Mocha
+keybind = cmd+enter=text:\r
+bell-features = no-system,audio,attention,title,no-border
+bell-audio-path = /System/Library/Sounds/Glass.aiff
+bell-audio-volume = 1
+
+# previous/next tmux window (sends prefix C-s + p/n); shadows Ghostty's tab switching
+keybind = cmd+shift+left_bracket=text:\x13p
+keybind = cmd+shift+right_bracket=text:\x13n
