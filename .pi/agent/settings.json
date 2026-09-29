@@ -1,0 +1,32 @@
+{
+  "lastChangelogVersion": "0.99.1",
+  "theme": "catppuccin-macchiato",
+  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\" 2>/dev/null",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6-sol",
+  "packages": [
+    {
+      "source": "npm:@plannotator/pi-extension",
+      "skills": []
+    },
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access"
+  ],
+  "skills": [
+    "-/Users/jg/.agents/skills/code-review-mattpocock/SKILL.md",
+    "-/Users/jg/.agents/skills/plannotator/SKILL.md",
+    "-/Users/jg/.agents/skills/plannotator-annotate/SKILL.md",
+    "-/Users/jg/.agents/skills/plannotator-last/SKILL.md",
+    "-/Users/jg/.agents/skills/plannotator-review/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail-audit/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail-debt/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail-gain/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail-help/SKILL.md",
+    "-/Users/jg/.agents/skills/ponytail-review/SKILL.md"
+  ],
+  "tuiMode": "fullscreen",
+  "markdown": {
+    "mermaid": "streaming"
+  }
+}
