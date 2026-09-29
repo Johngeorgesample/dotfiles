@@ -4,4 +4,16 @@ I don't have a handy way to install these yet, but feel free to poke around.
 
 ## Pi
 
-The tracked Pi settings and active theme are in `.pi/agent/`. To use them, copy those two files to `~/.pi/agent/` (create `themes/` if needed), then run `/reload` in Pi. Install the packages listed in `settings.json` separately with `pi install` if needed. Credentials (`auth.json`), sessions, caches, and machine-specific state are not tracked.
+To set up Pi on a new machine (from this repo's root):
+
+1. Install Node.js 22.19+ and Pi: `npm install -g --ignore-scripts @earendil-works/pi-coding-agent`.
+2. Back up any existing `~/.pi/agent/settings.json` before replacing it, then copy the tracked configuration:
+   ```sh
+   mkdir -p ~/.pi/agent/themes
+   cp .pi/agent/settings.json ~/.pi/agent/settings.json
+   cp .pi/agent/themes/catppuccin-macchiato.json ~/.pi/agent/themes/
+   ```
+3. Run `pi update --extensions` to install/reconcile the packages declared in `settings.json`.
+4. Start `pi`, run `/login` for your provider, and use `/model` to select an available model if the configured `openai-codex` / `gpt-6-sol` isn't available. Run `/reload` if Pi was already open when you copied the files.
+
+This is a partial setup, not a full agent backup: custom skills, MCP servers, global instructions, credentials (`auth.json`), sessions, and caches are not tracked. The `skills` entries in `settings.json` only exclude paths on the original machine; they do not install skills. The shell alias prefix also assumes aliases in `~/.zshrc` and may need adjusting on a different machine.
