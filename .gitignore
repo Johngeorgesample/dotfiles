@@ -1,0 +1,6 @@
+# Only track explicitly selected Pi settings and themes; never credentials or sessions.
+.pi/agent/*
+!.pi/agent/settings.json
+!.pi/agent/themes/
+.pi/agent/themes/*
+!.pi/agent/themes/catppuccin-macchiato.json
