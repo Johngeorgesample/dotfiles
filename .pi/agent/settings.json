@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.99.1",
   "theme": "catppuccin-macchiato",
-  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\" 2>/dev/null",
+  "shellPath": "~/.pi/agent/zsh-with-aliases",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-sol",
   "packages": [
