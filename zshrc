@@ -1,13 +1,30 @@
+# --------------------------------------------------------------------------------
+# ZSH things
+# --------------------------------------------------------------------------------
 export ZSH="/Users/john-georgesample/.oh-my-zsh"
 
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
+source $ZSH/oh-my-zsh.sh
 
+# --------------------------------------------------------------------------------
+# Env variables
+# --------------------------------------------------------------------------------
+export EDITOR=nvim
+export VISUAL=nvim
+export NVM_DIR="/Users/john-georgesample/.nvm"
+export ANDROID_SDK=/Users/john-georgesample/Library/Android/sdk
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
 plugins=(git z sublime zsh-syntax-highlighting zsh-autosuggestions globalias)
+# --------------------------------------------------------------------------------
+# Work things
+# --------------------------------------------------------------------------------
 
-source $ZSH/oh-my-zsh.sh
+alias gcomd='./development/deployment_tools/scripts/gcom/gcom-dev'
+alias gcomo='./development/deployment_tools/scripts/gcom/gcom-ops'
+
 # --------------------------------------------------------------------------------
 # Aliases
 # --------------------------------------------------------------------------------
@@ -16,22 +33,23 @@ alias :q="exit"
 alias :Q="exit"
 alias a='ls -lrth'
 alias bi='arch -arm64 brew install'
-alias bp=' cd ~/development/brewpad/'
+alias brag='open "https://docs.google.com/document/d/16RSLNniebNYNuNd84KMj8fz2kG7dDktRPOK5sfNqsOM/edit?tab=t.0#heading=h.g4zh8s80niyo"'
 alias c='claude'
 alias ca='clear && '
 alias cat='bat'
 alias cdr='cd $(git rev-parse --show-toplevel)' # go to root level of git dir
-alias ch="history | awk '{a[$2]++}END{for (i in a){print a[i] " " i}}' | sort -rn | head -20"
+alias ch="history | awk '{a[\$2]++}END{for (i in a){print a[i] \" \" i}}' | sort -rn | head -20"
 alias claude-side='tmux split-window -h -l 25% "claude"'
+alias claude='claude --dangerously-skip-permissions'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias cr='tuicr'
+# crev (review uncommitted changes in nvim, quickfix per hunk) lives in ~/.local/bin/crev
+# so the tmux popup binding (prefix+v) can run it too.
+# crevd: same review but side-by-side nvim diff, one file at a time
 alias crevd='git difftool --tool=nvimdiff -y'
-alias ct='git checkout test'
-alias cwmstop="brew services stop yabai"
-alias cwmstart="brew services start yabai"
 alias dd='docker compose down'
-alias dl='docker-compose logs'
-alias dps='docker-compose ps'
+alias dl='docker compose logs'
+alias dps='docker compose ps'
 alias dr='dd && du && yd'
 alias du='docker compose up --build -d'
 alias dev=" cd ~/development"
@@ -39,13 +57,14 @@ alias diary='cd ~/Documents/code/journal && nvim `date +"%Y-%m-%d"`.md'
 alias journal='cd ~/Documents/txt\ files && nvim `date +"%m.%d.%Y"`.txt'
 alias dotfiles='cd ~/dotfiles'
 alias doppler='mpv --loop-file=inf "https://radar.weather.gov/lite/N0R/PBZ_loop.gif"'
+alias ec="nvim /Users/jg/.claude/CLAUDE.md"
 alias ee='yarn run e2e'
 alias eu='yarn run e2e --ui'
-alias fd='displayplacer "id:7D8F5137-0762-3904-0B6C-BC80189F82A8 res:1920x1200 hz:59 color_depth:8 scaling:off origin:(0,0) degree:0" "id:98958CF3-4350-BDC2-FB15-1ADF6A8BD7D1 res:1200x1920 hz:59 color_depth:8 scaling:off origin:(-1200,-315) degree:90"'
-alias fxn='cd ~/development/function/'
 alias gad='git add --all .'
 alias gas='git rebase -i --autosquash'
 alias gc='git commit -m '
+alias gcl='git commit -m "linting"'
+alias gclp='git commit -m "linting" && gpup'
 alias gd='git diff'
 alias gdm='git diff master'
 alias gds='git diff stg'
@@ -71,26 +90,22 @@ alias gs='git status'
 alias gsa='git stash --all'
 alias gsl='git stash list'
 alias here='open . && exit'
-alias hosts='nvim /private/etc/hosts'
 alias hs='history | grep'
-alias job="open https://www.notion.so/ee4a68dc8a8549be92c996b196add3a4?v=6e32561f1c284407b28a90f6d82f7be9"
-alias kg='lazygit'
+alias hosts='nvim /private/etc/hosts'
+alias kg="lazygit" # typing is hard
 alias killtmux="tmux kill-server"
-alias later='open https://www.notion.so/Things-to-look-at-later-2766a1c0c1be43d790f5eec981be814f'
 alias life="cd ~/documents/life"
 alias lg="lazygit"
-alias longest="find . \( -name node_modules -o -name __tests__ \) -prune -o -name '*.tsx' -print | xargs wc -l |"
+alias longest="find . \( -name node_modules -o -name __tests__ \) -prune -o -name '*.tsx' -print | xargs wc -l |
+ sort -rn | head"
 alias n='nvim'
 alias nbim='nvim'
 alias ni='npm ci'
 alias nope='git merge --abort'
-alias notes="cd ~/development/notes"
 alias nuke='git branch --merged | egrep -v "(^\*|master|dev|stg|test)" | xargs git branch -d'
 alias nvimrc='nvim .config/nvim/init.vim'
-alias personal='cd ~/development/personal-site'
 alias pr='git push origin HEAD && open $(gh pr create -f)'
 alias prv='gh pr view --web'
-alias projects='open https://www.notion.so/Project-ideas-bd2d7d2cb5d045508d28daa07d204246'
 alias rr="ranger"
 alias scrot="screencapture ~/Desktop/screenshot.jpg"
 alias skim='open -a Skim.app'
@@ -109,17 +124,104 @@ alias ut='yarn test'
 alias v='nvim'
 alias vimrc='nvim ~/.vimrc'
 alias weather="curl wttr.in"
-alias wm="open https://meet.google.com/zxs-uzof-ofr"
 alias y='yarn run dev'
 alias ya='yarn add '
 alias yd='yarn run dev'
 alias yi='yarn install'
 alias yt='yarn test'
-alias zshconfig="nvim ~/.zshrc"
 alias zrc="nvim ~/.zshrc"
 alias zshrc="nvim ~/.zshrc"
 
- source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# --------------------------------------------------------------------------------
+# Functions
+# --------------------------------------------------------------------------------
+# Put formatted link for PRs in clipboard
+ghl() {
+  local url
+  if [[ $# -eq 0 ]]; then
+    read -rp "Enter GitHub PR URL: " url
+  else
+    url="$1"
+  fi
+  gh pr ready "$url"
+  ~/development/jg-hacks-github-script/gh-pr-md.sh "$url"
+}
+
+# Fuzzy searching branches to checkout
+gcdi () {
+        command git checkout $(git for-each-ref refs/heads/ --format='%(refname:short)' --sort='-committerdate' | fzf +s)
+}
+
+_diffshot_capture() {
+  local out="$1" seed="$2"
+  local staging="$out.staging"
+  while :; do
+    if pngpaste "$staging" 2>/dev/null; then
+      local h
+      h="$(shasum "$staging" 2>/dev/null | awk '{print $1}')"
+      if [[ -n "$h" && "$h" != "$seed" ]]; then
+        mv "$staging" "$out"
+        return 0
+      fi
+    fi
+    sleep 0.25
+  done
+}
+
+# Creates a single before/after screenshot and appends it to the clipboard
+# Run command, take before screenshot, take after screenshot, tada
+diffshot() {
+  local font="/System/Library/Fonts/Helvetica.ttc"
+  local before after out
+
+  if [[ $# -ge 2 ]]; then
+    before="$1"
+    after="$2"
+    out="${3:-combined.png}"
+  else
+    out="${1:-combined.png}"
+    before="${TMPDIR:-/tmp}/diffshot-before.$$.png"
+    after="${TMPDIR:-/tmp}/diffshot-after.$$.png"
+    local probe="${TMPDIR:-/tmp}/diffshot-probe.$$.png"
+    trap "rm -f '$before' '$after' '$before.staging' '$after.staging' '$probe'" EXIT INT TERM
+
+    local seed=""
+    if pngpaste "$probe" 2>/dev/null; then
+      seed="$(shasum "$probe" | awk '{print $1}')"
+      rm -f "$probe"
+    fi
+
+    printf 'Take BEFORE screenshot...'
+    _diffshot_capture "$before" "$seed" || return 1
+    printf ' captured\n'
+
+    printf 'Take AFTER screenshot... '
+    _diffshot_capture "$after" "$(shasum "$before" | awk '{print $1}')" || return 1
+    printf 'captured\n'
+  fi
+
+  magick \
+    \( "$before" -gravity north -background black -splice 0x40 -font "$font" -pointsize 28 -fill white -annotate +0+8 'Before' \) \
+    \( "$after"  -gravity north -background black -splice 0x40 -font "$font" -pointsize 28 -fill white -annotate +0+8 'After'  \) \
+    +append "$out" || return 1
+
+  local abs="$out"
+  [[ "$abs" != /* ]] && abs="$PWD/$abs"
+  osascript -e "set the clipboard to (read (POSIX file \"$abs\") as «class PNGf»)"
+  echo "diffshot: wrote $out (also on clipboard)"
+}
+
+# View PR
+# Opens every file changed in branch in nvim, one tab per file
+vpr() {
+  local base="${1:-origin/main}"
+  local files=("${(@f)$(git diff --name-only -z --diff-filter=d "$base...HEAD" | tr '\0' '\n')}")
+  if [[ -z "$files" ]]; then
+    echo "No changed files vs $base" >&2
+    return 1
+  fi
+  nvim -p "${files[@]}"
+}
 
 # Load version control information
 autoload -Uz vcs_info
@@ -135,6 +237,9 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
+# --------------------------------------------------------------------------------
+# PROMPT
+# --------------------------------------------------------------------------------
 PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[magenta]%} %~%{$fg[red]%}]%{$fg[white]%}$ ${vcs_info_msg_0_}"
 RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
@@ -142,18 +247,18 @@ YELLOW="$(tput setaf 3)"
 BLUE="$(tput setaf 4)"
 MAGENTA="$(tput setaf 5)"
 CYAN="$(tput setaf 6)"
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
 
 
-eval $(thefuck --alias)
 
-export NVM_DIR="/Users/john-georgesample/.nvm"
-export ANDROID_SDK=/Users/john-georgesample/Library/Android/sdk
-export PATH=/Users/john-georgesample/Library/Android/sdk/platform-tools:$PATH
-export EDITOR=nvim
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# --------------------------------------------------------------------------------
+# PATH
+# --------------------------------------------------------------------------------
+export PATH=/Users/john-georgesample/Library/Android/sdk/platform-tools:$PATH
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
