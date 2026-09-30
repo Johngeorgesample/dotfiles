@@ -29,7 +29,6 @@ alias crevd='git difftool --tool=nvimdiff -y'
 alias ct='git checkout test'
 alias cwmstop="brew services stop yabai"
 alias cwmstart="brew services start yabai"
-alias dc='cd ~/development/ringo-staywell-dc'
 alias dd='docker compose down'
 alias dl='docker-compose logs'
 alias dps='docker-compose ps'
@@ -62,7 +61,6 @@ alias gcop='git checkout prod'
 alias gcos='git checkout stg'
 alias gf='git commit --fixup'
 alias ghead='git log -1 --format="%H"'
-alias ghm="open https://github.com/groupten/metro"
 alias gl='git log'
 alias glp='git log --graph --pretty="%C(bold magenta)%h %C(blue)%cr%C(reset) %s %C(dim normal)%an%C(reset) %C(auto)%d" --all'
 alias glb='git reflog show --pretty=format:"%gs ~ %gd" --date=relative | grep "checkout:" | grep -oE "[^ ]+ ~ .*" | awk -F~ "!seen[\$1]++" | head -n 10 | awk -F" ~ HEAD@{" "{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr(\$2, 1, length(\$2)-1), \$1)}"'
@@ -81,10 +79,7 @@ alias killtmux="tmux kill-server"
 alias later='open https://www.notion.so/Things-to-look-at-later-2766a1c0c1be43d790f5eec981be814f'
 alias life="cd ~/documents/life"
 alias lg="lazygit"
-alias longest="find ~/development/metro -name '*.vue' | grep -v node_modules | xargs wc -l | sort -rn | head"
-alias ringo="cd ~/development/ringo"
-alias metro="cd ~/development/Metro"
-alias mpr="open https://github.com/GroupTen/metro/pulls"
+alias longest="find . \( -name node_modules -o -name __tests__ \) -prune -o -name '*.tsx' -print | xargs wc -l |"
 alias n='nvim'
 alias nbim='nvim'
 alias ni='npm ci'
@@ -96,16 +91,10 @@ alias personal='cd ~/development/personal-site'
 alias pr='git push origin HEAD && open $(gh pr create -f)'
 alias prv='gh pr view --web'
 alias projects='open https://www.notion.so/Project-ideas-bd2d7d2cb5d045508d28daa07d204246'
-alias raps="nvim ~/Documents/Notes/raps.md"
-alias rhub="cd ~/development/RingoHub"
 alias rr="ranger"
 alias scrot="screencapture ~/Desktop/screenshot.jpg"
-alias shane="open 'https://meet.google.com/rqb-egzy-uyq?pli=1&authuser=1'"
-
-alias skhdrc='nvim ~/.skhdrc'
 alias skim='open -a Skim.app'
 alias sp='spotify pause'
-alias staywell='cd ~/development/ringo-staywell-dc'
 alias sz='source ~/.zshrc'
 alias tmuxconf="nvim ~/.tmux.conf"
 alias t='yarn test'
@@ -126,8 +115,6 @@ alias ya='yarn add '
 alias yd='yarn run dev'
 alias yi='yarn install'
 alias yt='yarn test'
-alias yabairc='nvim ~/.yabairc'
-alias yrc='nvim ~/.yabairc'
 alias zshconfig="nvim ~/.zshrc"
 alias zrc="nvim ~/.zshrc"
 alias zshrc="nvim ~/.zshrc"
