@@ -1,7 +1,7 @@
 # --------------------------------------------------------------------------------
 # ZSH things
 # --------------------------------------------------------------------------------
-export ZSH="/Users/john-georgesample/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -12,8 +12,8 @@ source $ZSH/oh-my-zsh.sh
 # --------------------------------------------------------------------------------
 export EDITOR=nvim
 export VISUAL=nvim
-export NVM_DIR="/Users/john-georgesample/.nvm"
-export ANDROID_SDK=/Users/john-georgesample/Library/Android/sdk
+export NVM_DIR="$HOME/.nvm"
+export ANDROID_SDK=$HOME/Library/Android/sdk
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
 
@@ -57,7 +57,7 @@ alias diary='cd ~/Documents/code/journal && nvim `date +"%Y-%m-%d"`.md'
 alias journal='cd ~/Documents/txt\ files && nvim `date +"%m.%d.%Y"`.txt'
 alias dotfiles='cd ~/dotfiles'
 alias doppler='mpv --loop-file=inf "https://radar.weather.gov/lite/N0R/PBZ_loop.gif"'
-alias ec="nvim /Users/jg/.claude/CLAUDE.md"
+alias ec="nvim $HOME/.claude/CLAUDE.md"
 alias ee='yarn run e2e'
 alias eu='yarn run e2e --ui'
 alias gad='git add --all .'
@@ -259,6 +259,6 @@ CYAN="$(tput setaf 6)"
 # --------------------------------------------------------------------------------
 # PATH
 # --------------------------------------------------------------------------------
-export PATH=/Users/john-georgesample/Library/Android/sdk/platform-tools:$PATH
+export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
