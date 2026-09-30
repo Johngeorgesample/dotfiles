@@ -2,11 +2,11 @@
 # ZSH things
 # --------------------------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
-
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
-
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # --------------------------------------------------------------------------------
 # Env variables
 # --------------------------------------------------------------------------------
@@ -21,10 +21,8 @@ plugins=(git z sublime zsh-syntax-highlighting zsh-autosuggestions globalias)
 # --------------------------------------------------------------------------------
 # Work things
 # --------------------------------------------------------------------------------
-
 alias gcomd='./development/deployment_tools/scripts/gcom/gcom-dev'
 alias gcomo='./development/deployment_tools/scripts/gcom/gcom-ops'
-
 # --------------------------------------------------------------------------------
 # Aliases
 # --------------------------------------------------------------------------------
@@ -131,7 +129,6 @@ alias yi='yarn install'
 alias yt='yarn test'
 alias zrc="nvim ~/.zshrc"
 alias zshrc="nvim ~/.zshrc"
-
 # --------------------------------------------------------------------------------
 # Functions
 # --------------------------------------------------------------------------------
@@ -223,20 +220,12 @@ vpr() {
   nvim -p "${files[@]}"
 }
 
-# Load version control information
-autoload -Uz vcs_info
-precmd() { vcs_info }
-
-# Format the vcs_info_msg_0_ variable
-zstyle ':vcs_info:git:*' formats 'on branch %b'
-
 ## Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
-
 # --------------------------------------------------------------------------------
 # PROMPT
 # --------------------------------------------------------------------------------
@@ -247,18 +236,22 @@ YELLOW="$(tput setaf 3)"
 BLUE="$(tput setaf 4)"
 MAGENTA="$(tput setaf 5)"
 CYAN="$(tput setaf 6)"
-
-
-
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # --------------------------------------------------------------------------------
 # PATH
 # --------------------------------------------------------------------------------
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+# --------------------------------------------------------------------------------
+# Things I'm afraid to touch
+# --------------------------------------------------------------------------------
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Load version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats 'on branch %b'
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
