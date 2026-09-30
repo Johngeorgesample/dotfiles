@@ -229,7 +229,10 @@ bindkey -v '^?' backward-delete-char
 # --------------------------------------------------------------------------------
 # PROMPT
 # --------------------------------------------------------------------------------
-PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[magenta]%} %~%{$fg[red]%}]%{$fg[white]%}$ ${vcs_info_msg_0_}"
+autoload -Uz vcs_info; precmd() { vcs_info };
+zstyle ':vcs_info:git:*' formats '[%b]'
+setopt PROMPT_SUBST
+PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[magenta]%} %~%{$fg[red]%}]%{$fg[white]%}$ "'${vcs_info_msg_0_}'"%{$reset_color%} "
 RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
@@ -247,11 +250,5 @@ export PATH=$PATH:$GOPATH/bin
 # --------------------------------------------------------------------------------
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Load version control information
-autoload -Uz vcs_info
-precmd() { vcs_info }
-
-# Format the vcs_info_msg_0_ variable
-zstyle ':vcs_info:git:*' formats 'on branch %b'
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
