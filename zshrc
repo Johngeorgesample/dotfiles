@@ -244,6 +244,4 @@ export PATH="/usr/local/opt/poppler/bin:/opt/homebrew/opt/poppler/bin:$PATH"
 # Things I'm afraid to touch
 # --------------------------------------------------------------------------------
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
