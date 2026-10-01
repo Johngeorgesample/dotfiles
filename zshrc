@@ -245,6 +245,7 @@ CYAN="$(tput setaf 6)"
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+export PATH="/usr/local/opt/poppler/bin:/opt/homebrew/opt/poppler/bin:$PATH"
 # --------------------------------------------------------------------------------
 # Things I'm afraid to touch
 # --------------------------------------------------------------------------------
