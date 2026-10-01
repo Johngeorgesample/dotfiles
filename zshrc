@@ -94,8 +94,7 @@ alias kg="lazygit" # typing is hard
 alias killtmux="tmux kill-server"
 alias life="cd ~/documents/life"
 alias lg="lazygit"
-alias longest="find . \( -name node_modules -o -name __tests__ \) -prune -o -name '*.tsx' -print | xargs wc -l |
- sort -rn | head"
+alias longest="find . \( -name node_modules -o -name __tests__ \) -prune -o -name '*.tsx' -print | xargs wc -l | sort -rn | head"
 alias n='nvim'
 alias nbim='nvim'
 alias ni='npm ci'
