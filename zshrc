@@ -232,7 +232,7 @@ bindkey -v '^?' backward-delete-char
 autoload -Uz vcs_info; precmd() { vcs_info };
 zstyle ':vcs_info:git:*' formats '[%b]'
 setopt PROMPT_SUBST
-PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[magenta]%} %~%{$fg[red]%}]%{$fg[white]%}$ "'${vcs_info_msg_0_}'"%{$reset_color%} "
+PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[yellow]%} %~%{$fg[red]%}]%{$fg[blue]%}$ %{$fg[magenta]%}"'${vcs_info_msg_0_}'"%{$reset_color%} "
 RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
 YELLOW="$(tput setaf 3)"
