@@ -64,18 +64,11 @@ alias gc='git commit -m '
 alias gcl='git commit -m "linting"'
 alias gclp='git commit -m "linting" && gpup'
 alias gd='git diff'
-alias gdm='git diff master'
-alias gds='git diff stg'
-alias gdt='git diff test'
+alias gdm='git diff main'
 alias gco='git checkout'
 alias gcob='git checkout -b '
 alias gcobb='git checkout -b bugfix/'
 alias gcobf='git checkout -b feature/'
-alias gcod='git checkout dev'
-alias gcodp='git checkout dev && git pull'
-alias gcom='git checkout main'
-alias gcop='git checkout prod'
-alias gcos='git checkout stg'
 alias gf='git commit --fixup'
 alias ghead='git log -1 --format="%H"'
 alias gl='git log'
@@ -218,13 +211,6 @@ vpr() {
   fi
   nvim -p "${files[@]}"
 }
-
-## Use vim keys in tab complete menu:
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -v '^?' backward-delete-char
 # --------------------------------------------------------------------------------
 # PROMPT
 # --------------------------------------------------------------------------------
@@ -238,6 +224,15 @@ YELLOW="$(tput setaf 3)"
 BLUE="$(tput setaf 4)"
 MAGENTA="$(tput setaf 5)"
 CYAN="$(tput setaf 6)"
+# --------------------------------------------------------------------------------
+# BINDINGS
+# --------------------------------------------------------------------------------
+## Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 # --------------------------------------------------------------------------------
 # PATH
 # --------------------------------------------------------------------------------
