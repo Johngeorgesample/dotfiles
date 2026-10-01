@@ -12,9 +12,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rhysd/git-messenger.vim'
-Plug 'https://github.com/airblade/vim-gitgutter.git'
+Plug 'airblade/vim-gitgutter'
 Plug 'luochen1990/rainbow'
 Plug 'SirVer/ultisnips'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -23,8 +24,8 @@ Plug 'janko/vim-test'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/chrisbra/Colorizer.git'
 Plug 'vimwiki/vimwiki'
-Plug 'jiangmiao/auto-pairs'
 Plug 'prettier/vim-prettier'
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'mbbill/undotree'
@@ -34,6 +35,7 @@ Plug 'ellisonleao/glow.nvim'
 " writing
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'davidbeckingsale/writegood.vim'
 
 " JavaScript/TypeScript
 Plug 'https://github.com/posva/vim-vue.git'
@@ -165,18 +167,14 @@ map <leader>r :%s///g<LEFT><LEFT><LEFT>
 map <leader>ss :setlocal spell!<CR>
 map <leader>sj :syntax=javascript<CR>
 map <Leader>sv :so $MYVIMRC<CR>
-" Replacing with t prefix tree
-" map <leader>t :TestFile<CR>
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
 map <leader>ts :TestSuite<CR>
 map <leader>tl :TestLast<CR>
 map <leader>tg :TestVisit<CR>
-
 " open current file in new vertical buffer
 nnoremap <leader>v <C-w>v
 nmap Y y$
-
 map <leader>// :GFiles<CR>
 map <leader>/f :FZF<CR>
 map <leader>/, :CtrlSF<SPACE>
@@ -290,6 +288,9 @@ set diffopt+=vertical
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
+
+" Don't wait so long for the next keypress (particularly in ambigious Leader
+" situations.
 set timeoutlen=500
 
 " --------------------------------------------------------------------------------
@@ -355,13 +356,6 @@ hi IndentGuidesEven ctermbg=darkgrey
 " --------------------------------------------------------------------------------
 " FZF floating window for nvim
 " --------------------------------------------------------------------------------
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-
-" Ignore default colorschemes when tabbing through list
-set wildignore+=blue.vim,darkblue.vim,default.vim,delek.vim,desert.vim,
-      \elflord.vim,evening.vim,industry.vim,koehler.vim,morning.vim,murphy.vim,
-      \pablo.vim,peachpuff.vim,ron.vim,shine.vim,slate.vim,torte.vim,zellner.vim
-
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
@@ -522,6 +516,13 @@ au FocusGained,BufEnter * checktime
 " Misc.
 " --------------------------------------------------------------------------------
 set wildmode=list:longest,full
+
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+
+" Ignore default colorschemes when tabbing through list
+set wildignore+=blue.vim,darkblue.vim,default.vim,delek.vim,desert.vim,
+      \elflord.vim,evening.vim,industry.vim,koehler.vim,morning.vim,murphy.vim,
+      \pablo.vim,peachpuff.vim,ron.vim,shine.vim,slate.vim,torte.vim,zellner.vim
 
 " no one should have to resize without a mouse
 if has('mouse')
