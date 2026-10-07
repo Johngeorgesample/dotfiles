@@ -1,0 +1,26 @@
+#!/bin/sh
+# Waiting agents first, then completed agents. Enter jumps across sessions.
+items=$(tmux list-panes -a -F '#{pane_id}	#{@agent_state}	#{@agent_name}	#{session_name}:#{window_index}.#{pane_index}	#{b:pane_current_path}' |
+  awk -F '\t' '
+    $2 == "!" || $2 == "✓" {
+      n++; id[n] = $1; state[n] = $2; session[n] = $4; repo[n] = $5; agent[n] = $3
+      if (length($4) > sw) sw = length($4)
+      if (length($5) > rw) rw = length($5)
+      if (length($3) > aw) aw = length($3)
+    }
+    END {
+      for (i = 1; i <= n; i++)
+        printf "%s\t%s\t%-*s  %-*s  %-*s  %s\n", id[i], state[i], sw, session[i], rw, repo[i], aw, agent[i], state[i]
+    }
+  ' |
+  LC_ALL=C sort -t "$(printf '\t')" -k2,2)
+
+if [ -z "$items" ]; then
+  printf 'No agents need you.\n'
+  sleep 1
+  exit 0
+fi
+
+choice=$(printf '%s\n' "$items" | fzf --no-sort --delimiter "$(printf '\t')" --with-nth=3 --prompt='Agents > ')
+[ -n "$choice" ] || exit 0
+tmux switch-client -t "$(printf '%s' "$choice" | cut -f1)"
