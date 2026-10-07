@@ -1,6 +1,6 @@
 #!/bin/sh
 # Waiting agents first, then completed agents. Enter jumps across sessions.
-items=$(tmux list-panes -a -F '#{pane_id}	#{@agent_state}	#{@agent_name}	#{session_name}:#{window_index}.#{pane_index}	#{b:pane_current_path}' |
+items=$(tmux list-panes -a -F '#{pane_id}	#{@agent_state}	#{@agent_name}	#{session_name}	#{b:pane_current_path}' |
   awk -F '\t' '
     $2 == "!" || $2 == "✓" {
       n++; id[n] = $1; state[n] = $2; session[n] = $4; repo[n] = $5; agent[n] = $3
