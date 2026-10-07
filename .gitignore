@@ -2,6 +2,9 @@
 .pi/agent/*
 !.pi/agent/settings.json
 !.pi/agent/zsh-with-aliases
+!.pi/agent/extensions/
+.pi/agent/extensions/*
+!.pi/agent/extensions/tmux-agent-status.ts
 !.pi/agent/themes/
 .pi/agent/themes/*
 !.pi/agent/themes/catppuccin-macchiato.json

@@ -1,0 +1,23 @@
+#!/bin/sh
+# Called by Pi and Claude Code only when running inside tmux.
+[ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ] || exit 0
+
+case "${1:-}" in
+  working) marker='…' ;;
+  done) marker='✓' ;;
+  waiting) marker='!' ;;
+  idle) marker='' ;;
+  clear) tmux set-option -pu -t "$TMUX_PANE" @agent_state 2>/dev/null
+         tmux set-option -pu -t "$TMUX_PANE" @agent_name 2>/dev/null
+         exit 0 ;;
+  *) exit 2 ;;
+esac
+
+case "${2:-}" in
+  pi|claude) tmux set-option -p -t "$TMUX_PANE" @agent_name "$2" 2>/dev/null ;;
+esac
+if [ -n "$marker" ]; then
+  tmux set-option -p -t "$TMUX_PANE" @agent_state "$marker" 2>/dev/null
+else
+  tmux set-option -pu -t "$TMUX_PANE" @agent_state 2>/dev/null
+fi

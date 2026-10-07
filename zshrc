@@ -213,6 +213,19 @@ vpr() {
 # PROMPT
 # --------------------------------------------------------------------------------
 autoload -Uz vcs_info; precmd() { vcs_info };
+
+# Show the expanded foreground command in tmux (for example, yd → yarn run dev).
+if [[ -n "$TMUX" && -n "$TMUX_PANE" ]]; then
+  autoload -Uz add-zsh-hook
+  _tmux_command_start() {
+    tmux set-option -p -t "$TMUX_PANE" @pane_command "${2//$'\n'/ }" 2>/dev/null
+  }
+  _tmux_command_end() {
+    tmux set-option -pu -t "$TMUX_PANE" @pane_command 2>/dev/null
+  }
+  add-zsh-hook preexec _tmux_command_start
+  add-zsh-hook precmd _tmux_command_end
+fi
 zstyle ':vcs_info:git:*' formats '[%b]'
 setopt PROMPT_SUBST
 PS1="%{$fg[red]%}[%{$reset_color%}$fg[yellow]%}JG$fg[green]%}@$fg[blue]%}core$fg[yellow]%} %~%{$fg[red]%}]%{$fg[blue]%}$ %{$fg[magenta]%}"'${vcs_info_msg_0_}'"%{$reset_color%} "
