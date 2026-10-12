@@ -131,8 +131,8 @@ nmap <leader>dt :diffthis<cr>
 nmap <leader>do :diffoff<cr>
 map <leader>es :UltiSnipsEdit<cr>
 map <leader>gw :Gwrite<CR>
-map <leader>gc :Gcommit -m ""<LEFT>
-map <leader>gs :Gstatus<CR>
+map <leader>gc :Git commit -m ""<LEFT>
+map <leader>gs :Git<CR>
 map <leader>gb :Git blame<CR>
 map <leader>gd :Gdiffsplit<SPACE>
 map <leader>gh :GBrowse<CR>
