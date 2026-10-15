@@ -1,0 +1,287 @@
+{
+  "profiles": [
+    {
+      "name": "Default profile",
+      "selected": true,
+      "virtual_hid_keyboard": {
+        "keyboard_type_v2": "ansi"
+      },
+      "devices": [
+        {
+          "identifiers": {
+            "is_pointing_device": true,
+            "vendor_id": 1133,
+            "product_id": 45108
+          },
+          "ignore": false
+        }
+      ],
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "MX Master back+forward together toggles the ideas inbox window",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "simultaneous": [
+                    {
+                      "pointing_button": "button4"
+                    },
+                    {
+                      "pointing_button": "button5"
+                    }
+                  ],
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/jg/ideas/bin/toggle-ideas"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "vendor_id": 1133,
+                        "product_id": 45108
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "MX Master back button in terminals: hold = push-to-talk, double-click = hands-free (click again to send)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "pointing_button": "button4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Applications/Handy.app/Contents/MacOS/handy --toggle-transcription"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "handy_latched",
+                      "value": 0
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "vendor_id": 1133,
+                        "product_id": 45108
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^com\\.apple\\.Terminal$"
+                    ]
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "handy_latched",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "pointing_button": "button4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Applications/Handy.app/Contents/MacOS/handy --toggle-transcription"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "handy_latched",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "handy_tapped_once",
+                      "value": 0
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "vendor_id": 1133,
+                        "product_id": 45108
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^com\\.apple\\.Terminal$"
+                    ]
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "handy_tapped_once",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "pointing_button": "button4",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "handy_tapped_once",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "vendor_id": 1133,
+                        "product_id": 45108
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^com\\.apple\\.Terminal$"
+                    ]
+                  }
+                ],
+                "to_if_held_down": [
+                  {
+                    "key_code": "spacebar",
+                    "modifiers": [
+                      "left_option"
+                    ]
+                  }
+                ],
+                "to_delayed_action": {
+                  "to_if_invoked": [
+                    {
+                      "set_variable": {
+                        "name": "handy_tapped_once",
+                        "value": 0
+                      }
+                    }
+                  ],
+                  "to_if_canceled": [
+                    {
+                      "set_variable": {
+                        "name": "handy_tapped_once",
+                        "value": 0
+                      }
+                    }
+                  ]
+                },
+                "parameters": {
+                  "basic.to_if_held_down_threshold_milliseconds": 150,
+                  "basic.to_delayed_action_delay_milliseconds": 300
+                }
+              }
+            ]
+          },
+          {
+            "description": "MX Master forward button sends Escape in terminals (Handy cancel)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "pointing_button": "button5",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "escape"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "handy_latched",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "set_variable": {
+                      "name": "handy_tapped_once",
+                      "value": 0
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      {
+                        "vendor_id": 1133,
+                        "product_id": 45108
+                      }
+                    ]
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^dev\\.warp\\.Warp-Stable$",
+                      "^com\\.apple\\.Terminal$"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

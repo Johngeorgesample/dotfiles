@@ -10,6 +10,17 @@ To install the Ghostty config on macOS:
 mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
 cp ghostty/config "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 ```
+## Karabiner
+
+To install the Karabiner-Elements config (back up any existing one first):
+
+```sh
+mkdir -p ~/.config/karabiner
+cp karabiner/karabiner.json ~/.config/karabiner/karabiner.json
+```
+
+The rules target a Logitech MX Master and call `/Users/jg/ideas/bin/toggle-ideas` and Handy; adjust those paths on other machines.
+
 ## Pi
 
 To set up Pi on a new machine (from this repo's root):
