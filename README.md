@@ -39,7 +39,7 @@ This is a partial setup, not a full agent backup: custom skills, MCP servers, gl
 
 ## tmux agent status
 
-The status bar shows Pi/Claude state (`…` working, `✓` done, `!` waiting), a running shell command (including expanded aliases), or the directory at a prompt. Command arguments may be visible in the status bar; avoid putting secrets on command lines.
+The status bar shows Pi/Claude state (`…` working, `✓` done with no background tasks still running, `!` waiting), a running shell command (including expanded aliases), or the directory at a prompt. Command arguments may be visible in the status bar; avoid putting secrets on command lines.
 
 From this repo's root, back up existing configs before replacing or merging them:
 
