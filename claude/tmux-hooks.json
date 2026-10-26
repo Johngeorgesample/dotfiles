@@ -1,7 +1,7 @@
 {
   "hooks": {
     "SessionStart": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status idle claude" }] }],
-    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status working claude" }] }],
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status working claude" }, { "type": "command", "command": "$HOME/.local/bin/tmux-agent-prompt set" }] }],
     "PermissionRequest": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status waiting claude" }] }],
     "PostToolUse": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status working claude" }] }],
     "Stop": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status done claude" }] }],

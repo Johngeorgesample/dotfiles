@@ -1,0 +1,57 @@
+#!/bin/sh
+# set: called by Claude Code's UserPromptSubmit hook to remember the last prompt on the pane.
+# popup <window> <client> <mouse_x>: show that window's remembered prompts in a popup sized to fit.
+# show <file> <scroll>: render inside the popup (internal).
+
+case "${1:-}" in
+  set)
+    [ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ] || exit 0
+    prompt="$(jq -r '.prompt // empty')"
+    case "$prompt" in
+      ''|'<task-notification>'*) exit 0 ;;
+    esac
+    tmux set-option -p -t "$TMUX_PANE" @agent_prompt "$prompt" 2>/dev/null
+    exit 0 ;;
+  popup)
+    window="$2" client="$3" mouse_x="${4:-0}"
+    client_width="$(tmux display -p -c "$client" '#{client_width}')"
+    client_height="$(tmux display -p -c "$client" '#{client_height}')"
+    max_width=$(( client_width * 7 / 10 ))
+    [ "$max_width" -gt 100 ] && max_width=100
+    max_height=$(( client_height * 7 / 10 ))
+
+    panes="$(tmux list-panes -t "$window" -F '#{?@agent_prompt,#{pane_id},}' | grep .)"
+    pane_count="$(printf '%s\n' "$panes" | wc -l | tr -d ' ')"
+    text="$(mktemp "${TMPDIR:-/tmp}/tmux-agent-prompt.XXXXXX")"
+    printf '%s\n' "$panes" | while read -r pane; do
+      if [ "$pane_count" -gt 1 ]; then
+        [ -s "$text" ] && echo >>"$text"
+        printf '\033[2m%s\033[0m\n' "$(tmux display -p -t "$pane" '#{@agent_name} · pane #{pane_index}')" >>"$text"
+      fi
+      tmux show-options -pqv -t "$pane" @agent_prompt | fold -s -w $(( max_width - 4 )) | sed 's/ *$//' >>"$text"
+    done
+
+    content_width="$(sed 's/\x1b\[[0-9;]*m//g' "$text" | awk '{ if (length > w) w = length } END { print w + 0 }')"
+    content_height="$(wc -l <"$text" | tr -d ' ')"
+    width=$(( content_width + 4 ))
+    [ "$width" -lt 24 ] && width=24
+    height=$(( content_height + 2 ))
+    scroll=0
+    [ "$height" -gt "$max_height" ] && height="$max_height" && scroll=1
+    x="$mouse_x"
+    [ $(( x + width )) -gt "$client_width" ] && x=$(( client_width - width ))
+
+    tmux display-popup -c "$client" -x "$x" -y S -w "$width" -h "$height" \
+      -b rounded -S fg=colour244 -T '#[fg=colour250] last prompt ' \
+      -E "'$0' show '$text' $scroll; rm -f '$text'" ;;
+  show)
+    if [ "$3" = 1 ]; then
+      less -R -~ -P' ' "$2"
+    else
+      printf '\033[?25l\033[?1000h'
+      printf '%s' "$(sed 's/^/ /' "$2")"
+      stty -icanon -echo
+      dd bs=1 count=1 >/dev/null 2>&1
+    fi ;;
+  *) exit 2 ;;
+esac
