@@ -10,6 +10,15 @@ case "${1:-}" in
   clear) tmux set-option -pu -t "$TMUX_PANE" @agent_state 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_prompt 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_name 2>/dev/null
+         tmux set-option -pu -t "$TMUX_PANE" @agent_title 2>/dev/null
+         exit 0 ;;
+  # Claude Code has no rename hook; its status line command gets the /rename name on stdin
+  title) title="$(jq -r '.session_name // empty')"
+         if [ -n "$title" ]; then
+           tmux set-option -p -t "$TMUX_PANE" @agent_title "$title" 2>/dev/null
+         else
+           tmux set-option -pu -t "$TMUX_PANE" @agent_title 2>/dev/null
+         fi
          exit 0 ;;
   *) exit 2 ;;
 esac

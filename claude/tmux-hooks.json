@@ -1,4 +1,5 @@
 {
+  "statusLine": { "type": "command", "command": "$HOME/.local/bin/tmux-agent-status title" },
   "hooks": {
     "SessionStart": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status idle claude" }] }],
     "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "$HOME/.local/bin/tmux-agent-status working claude" }, { "type": "command", "command": "$HOME/.local/bin/tmux-agent-prompt set" }] }],
