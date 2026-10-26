@@ -49,12 +49,15 @@ cp zshrc ~/.zshrc
 mkdir -p ~/.local/bin ~/.pi/agent/extensions
 install -m 755 bin/tmux-agent-status ~/.local/bin/tmux-agent-status
 install -m 755 bin/tmux-agent-picker ~/.local/bin/tmux-agent-picker
+install -m 755 bin/tmux-agent-prompt ~/.local/bin/tmux-agent-prompt
 cp .pi/agent/extensions/tmux-agent-status.ts ~/.pi/agent/extensions/
 ```
 
 Merge each event in `claude/tmux-hooks.json` into `~/.claude/settings.json`'s `hooks` object, **appending** to existing event arrays (do not replace other hooks). Start new Pi/Claude sessions and new zsh shells inside tmux; reload tmux with `tmux source-file ~/.tmux.conf`.
 
 With [fzf](https://github.com/junegunn/fzf) installed, press tmux prefix then `a` for a cross-session picker of agents waiting (`!`) or done (`✓`). Enter jumps to that pane; waiting agents appear first.
+
+Right-click a Claude window's tab in the status bar to see the last prompt you sent it (requires [jq](https://jqlang.org)). Alt-right-click still opens tmux's window menu.
 
 ## Lazygit theme
 

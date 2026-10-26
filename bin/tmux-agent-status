@@ -8,6 +8,7 @@ case "${1:-}" in
   waiting) marker='!' ;;
   idle) marker='' ;;
   clear) tmux set-option -pu -t "$TMUX_PANE" @agent_state 2>/dev/null
+         tmux set-option -pu -t "$TMUX_PANE" @agent_prompt 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_name 2>/dev/null
          exit 0 ;;
   *) exit 2 ;;
