@@ -53,9 +53,11 @@ install -m 755 bin/tmux-agent-prompt ~/.local/bin/tmux-agent-prompt
 cp .pi/agent/extensions/tmux-agent-status.ts ~/.pi/agent/extensions/
 ```
 
-Merge each event in `claude/tmux-hooks.json` into `~/.claude/settings.json`'s `hooks` object, **appending** to existing event arrays (do not replace other hooks). Start new Pi/Claude sessions and new zsh shells inside tmux; reload tmux with `tmux source-file ~/.tmux.conf`.
+Merge each event in `claude/tmux-hooks.json` into `~/.claude/settings.json`'s `hooks` object, **appending** to existing event arrays (do not replace other hooks). Also copy its `statusLine` (it prints nothing; it only passes the `/rename` name to tmux), or if you already have a status line command, pipe its stdin through `tmux-agent-status title` too. Start new Pi/Claude sessions and new zsh shells inside tmux; reload tmux with `tmux source-file ~/.tmux.conf`.
 
 With [fzf](https://github.com/junegunn/fzf) installed, press tmux prefix then `a` for a cross-session picker of agents waiting (`!`) or done (`✓`). Enter jumps to that pane; waiting agents appear first.
+
+Renaming a Claude session with `/rename` relabels its tab and its picker entry.
 
 Right-click a Claude window's tab in the status bar to see the last prompt you sent it (requires [jq](https://jqlang.org)). Alt-right-click still opens tmux's window menu.
 
