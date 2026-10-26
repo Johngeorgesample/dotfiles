@@ -5,12 +5,20 @@
 case "${1:-}" in
   working) marker='…' ;;
   done) marker='✓' ;;
-  waiting) marker='!' ;;
+  waiting) marker='!'
+           [ "${2:-}" = claude ] && tmux set-option -p -t "$TMUX_PANE" @agent_waiting_on "$(jq -r '.agent_id // "main"')" 2>/dev/null ;;
+  # Claude PostToolUse: a background subagent's tool call must not hide another agent's permission prompt
+  tool) marker='…'
+        if [ "$(tmux display -p -t "$TMUX_PANE" '#{@agent_state}')" = '!' ] &&
+           [ "$(jq -r '.agent_id // "main"')" != "$(tmux display -p -t "$TMUX_PANE" '#{@agent_waiting_on}')" ]; then
+          exit 0
+        fi ;;
   idle) marker='' ;;
   clear) tmux set-option -pu -t "$TMUX_PANE" @agent_state 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_prompt 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_name 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_title 2>/dev/null
+         tmux set-option -pu -t "$TMUX_PANE" @agent_waiting_on 2>/dev/null
          exit 0 ;;
   # Claude Code has no rename hook, and the status line's session_name falls back to the auto-generated title,
   # so read the /rename name from the transcript instead
