@@ -12,8 +12,10 @@ case "${1:-}" in
          tmux set-option -pu -t "$TMUX_PANE" @agent_name 2>/dev/null
          tmux set-option -pu -t "$TMUX_PANE" @agent_title 2>/dev/null
          exit 0 ;;
-  # Claude Code has no rename hook; its status line command gets the /rename name on stdin
-  title) title="$(jq -r '.session_name // empty')"
+  # Claude Code has no rename hook, and the status line's session_name falls back to the auto-generated title,
+  # so read the /rename name from the transcript instead
+  title) transcript="$(jq -r '.transcript_path // empty')"
+         title="$(grep -hF '"type":"custom-title"' "$transcript" 2>/dev/null | tail -1 | jq -r '.customTitle // empty')"
          if [ -n "$title" ]; then
            tmux set-option -p -t "$TMUX_PANE" @agent_title "$title" 2>/dev/null
          else
