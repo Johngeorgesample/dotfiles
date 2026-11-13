@@ -71,3 +71,13 @@ ln -s "$PWD/lazygit.yml" ~/.config/lazygit/config.yml
 ```
 
 Back up or remove an existing `~/.config/lazygit/config.yml` first. Run `lazygit` to see the theme.
+
+## Rex
+
+To install the Rex key bindings (back up any existing one first):
+
+```sh
+mkdir -p ~/.config/rex
+cp rex/init.lua ~/.config/rex/init.lua
+rex config reload
+```
