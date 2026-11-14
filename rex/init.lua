@@ -11,3 +11,6 @@ rex.bind("ctrl+s>;", "pane.focus_previous")
 rex.bind("ctrl+s>z", "pane.zoom")
 rex.bind("ctrl+s>x", "pane.close")
 rex.bind("ctrl+s>c", "client.tab.new")
+
+rex.bind("shift+cmd+[", "client.tab.next")
+rex.bind("shift+cmd+]", "client.tab.previous")
