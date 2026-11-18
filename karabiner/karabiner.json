@@ -96,7 +96,8 @@
                     "bundle_identifiers": [
                       "^com\\.mitchellh\\.ghostty$",
                       "^dev\\.warp\\.Warp-Stable$",
-                      "^com\\.apple\\.Terminal$"
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.superlogical\\.rex$"
                     ]
                   },
                   {
@@ -148,7 +149,8 @@
                     "bundle_identifiers": [
                       "^com\\.mitchellh\\.ghostty$",
                       "^dev\\.warp\\.Warp-Stable$",
-                      "^com\\.apple\\.Terminal$"
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.superlogical\\.rex$"
                     ]
                   },
                   {
@@ -191,7 +193,8 @@
                     "bundle_identifiers": [
                       "^com\\.mitchellh\\.ghostty$",
                       "^dev\\.warp\\.Warp-Stable$",
-                      "^com\\.apple\\.Terminal$"
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.superlogical\\.rex$"
                     ]
                   }
                 ],
@@ -273,7 +276,8 @@
                     "bundle_identifiers": [
                       "^com\\.mitchellh\\.ghostty$",
                       "^dev\\.warp\\.Warp-Stable$",
-                      "^com\\.apple\\.Terminal$"
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.superlogical\\.rex$"
                     ]
                   }
                 ]
